@@ -1,10 +1,15 @@
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import { FaTwitter } from "react-icons/fa";
+
 
 
 interface Follower {
   id: string
   name: string
   username: string
+  url: string
+  profile_image_url: string
 }
 
 const FollowerList = () => {
@@ -15,7 +20,7 @@ const FollowerList = () => {
       method: 'GET',
     }).then(res => res.json());
 
-    console.log(results.data);
+    console.log("Results: ", results.data);
     setFollowers(results.data);
   }
 
@@ -25,155 +30,52 @@ const FollowerList = () => {
 
   return (
     <div>
-      <ul>
-        {followers && followers.map((follower: Follower) => {
-          return (
-            <li key={follower.id}>{follower.username}</li>
-          )
-        })}
-      </ul>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
             <tr>
               <th>Name</th> 
-              <th>Job</th> 
-              <th>Favorite Color</th> 
-              <th></th>
+              <th>URL</th> 
+              <th>Unfollow</th>
             </tr>
           </thead> 
           <tbody>
-            <tr>
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="w-12 h-12 mask mask-squircle">
-                      <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
-                    </div>
-                  </div> 
-                  <div>
-                    <div className="font-bold">
-                          Hart Hagerty
-                        </div> 
-                    <div className="text-sm opacity-50">
-                          United States
+            {followers && followers.map((follower: Follower) => {
+              return (
+                <tr key={follower.id}>
+                  <td>
+                    <div className="flex items-center space-x-3">
+                      <div className="avatar">
+                        <div className="w-12 h-12 mask mask-squircle">
+                          <Image 
+                            src={follower.profile_image_url || "http://assets.example.com"} 
+                            alt="Profile Image"
+                            width={25}
+                            height={25}
+                          />
                         </div>
-                  </div>
-                </div>
-              </td> 
-              <td>
-                  Zemlak, Daniel and Leannon
-                  
-                <br/> 
-                <span className="badge badge-outline badge-sm">Desktop Support Technician</span>
-              </td> 
-              <td>Purple</td> 
-              <th>
-                <button className="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr>
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox"/>
-                </label>
-              </th> 
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="w-12 h-12 mask mask-squircle">
-                      <img src="/tailwind-css-component-profile-3@56w.png" alt="Avatar Tailwind CSS Component"/>
+                      </div> 
+                      <div>
+                        <div className="font-bold">
+                              {follower.name}
+                            </div> 
+                        <div className="text-sm opacity-50">
+                            {`@${follower.username}`}
+                            </div>
+                      </div>
                     </div>
-                  </div> 
-                  <div>
-                    <div className="font-bold">
-                          Brice Swyre
-                        </div> 
-                    <div className="text-sm opacity-50">
-                          China
-                        </div>
-                  </div>
-                </div>
-              </td> 
-              <td>
-                  Carroll Group
-                  
-                <br/> 
-                <span className="badge badge-outline badge-sm">Tax Accountant</span>
-              </td> 
-              <td>Red</td> 
-              <th>
-                <button className="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr>
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox"/>
-                </label>
-              </th> 
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="w-12 h-12 mask mask-squircle">
-                      <img src="/tailwind-css-component-profile-4@56w.png" alt="Avatar Tailwind CSS Component"/>
-                    </div>
-                  </div> 
-                  <div>
-                    <div className="font-bold">
-                          Marjy Ferencz
-                        </div> 
-                    <div className="text-sm opacity-50">
-                          Russia
-                        </div>
-                  </div>
-                </div>
-              </td> 
-              <td>
-                  Rowe-Schoen
-                  
-                <br/> 
-                <span className="badge badge-outline badge-sm">Office Assistant I</span>
-              </td> 
-              <td>Crimson</td> 
-              <th>
-                <button className="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr>
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox"/>
-                </label>
-              </th> 
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="w-12 h-12 mask mask-squircle">
-                      <img src="/tailwind-css-component-profile-5@56w.png" alt="Avatar Tailwind CSS Component"/>
-                    </div>
-                  </div> 
-                  <div>
-                    <div className="font-bold">
-                          Yancy Tear
-                        </div> 
-                    <div className="text-sm opacity-50">
-                          Brazil
-                        </div>
-                  </div>
-                </div>
-              </td> 
-              <td>
-                  Wyman-Ledner
-                  
-                <br/> 
-                <span className="badge badge-outline badge-sm">Community Outreach Specialist</span>
-              </td> 
-              <td>Indigo</td> 
-              <th>
-                <button className="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr>
+                  </td> 
+                  <td>
+                    <a href={follower.url}>
+                      <FaTwitter />
+                    </a>
+                  </td> 
+                  <td>
+                    <button className="btn btn-error">Unfollow</button>
+                  </td> 
+                </tr>
+              )
+            })}
           </tbody> 
         </table>
       </div>

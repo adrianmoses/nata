@@ -16,7 +16,11 @@ export const getUser = async (username) => {
 export const getFollowers = async (userId) => {
   console.log("[GET Followers with userId]", userId);
   try {
-    return await client.v2.followers(userId);
+    return await client.v2.followers(userId, {
+      // asPaginator: true,
+      "user.fields": ["profile_image_url", "url"],
+      max_results: 10,
+    });
   } catch (e) {
     console.error(e);
     return e;

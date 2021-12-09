@@ -11,11 +11,17 @@ export default async (req, res) => {
   console.log("token", token);
 
   try {
+    let followers = [];
     // @ts-ignore
     const results = await getFollowers(token.twitter.user_id);
+    followers.push.apply(followers, results.data);
+    // for await (const follower of results) {
+    //   followers.push(follower);
+    // }
+
     return res.status(200).json({
       status: "Ok",
-      data: results.data,
+      data: followers,
     });
   } catch (e) {
     return res.status(400).json({
