@@ -26,3 +26,18 @@ export const getFollowers = async (userId) => {
     return e;
   }
 };
+
+export const getFollowings = async (userId) => {
+  console.log("[GET] Followings with user", userId);
+
+  try {
+    return await client.v2.following(userId, {
+      // asPaginator: true,
+      "user.fields": ["profile_image_url", "url"],
+      max_results: 10,
+    });
+  } catch (e) {
+    console.error(e);
+    return e;
+  }
+};
