@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useSession, signIn } from "next-auth/react";
-import FollowerList from '../components/FollowerList';
 import Navigation from '../components/Navigation';
+import FollowingList from '../components/FollowingList';
 
 const Home: NextPage = () => {
   const {data: session } = useSession();
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
 
         {session && (
           <div>
-            <FollowerList />
+            <FollowingList />
           </div>
         )}
       </main>

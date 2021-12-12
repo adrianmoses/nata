@@ -1,23 +1,38 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from 'next/link'
 
 const Navigation = () => {
   const {data: session } = useSession();
 
-  console.log(session);
   return (
     <div className="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
       <div className="flex-1 px-2 mx-2">
-        <span className="text-lg font-bold">natwa</span>
+        <Link href="/" passHref>
+          <a className="text-lg font-bold">natwa</a>
+        </Link>
       </div>
-      <div className="flex-none pr-4">
+      <div className="hidden px-2 mx-2 navbar-center lg:flex">
+          <div className="flex items-stretch">
+            <a className="btn btn-ghost btn-sm rounded-btn">
+              Home
+            </a> 
+            <a className="btn btn-ghost btn-sm rounded-btn">
+              Follows
+            </a> 
+            <a className="btn btn-ghost btn-sm rounded-btn">
+              Settings
+            </a> 
+          </div>
+      </div> 
+      <div className="navbar-end flex-none pr-4">
         {session ? (
           <>
             {/* Signed in as {session.user?.email} <br /> */}
             {/* <button onClick={() => signOut()}>Sign out</button> */}
             <div className="avatar">
               <div className="rounded-full">
-                <Image src={session.user?.image ?? ""} alt="signed in" height={24} width={24} />
+                <Image src={session.user?.image ?? ""} alt="signed in" height={48} width={48} />
               </div>
             </div>
           </>
